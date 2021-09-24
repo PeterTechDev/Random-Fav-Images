@@ -1,29 +1,16 @@
 // var para salvar as url favoritas
 // parse para transf em jason e primeiro verifica se já algum salvo no storage, caso contrário se inicia vazio
 let favorites = JSON.parse(localStorage.getItem('favorites')) || []
+const imgContainer = document.querySelector('.image')
+const btn = document.que
 
-// Pegar img externa
-async function getExternalImg(){
-    const response = await fetch('https://source.unsplash.com/random')
-
-    //                                             interpolação
-    document.querySelector('.image')
-    .innerHTML = `<img src="${response.url}">`
-
-}
-getExternalImg()
-
-// clicalr no btn pega img externa
-document.querySelector('button').onclick = function(){
-    getExternalImg()
-}
+document.querySelector('button').onclick = ()=> updateClasses()
 
 // clicar na img
-document.querySelector('.image').onclick = function(){
+imgContainer.onclick = function(){
     // salvar no local storage ou remover
     const imgSource = document.querySelector('.image img').src
 
-    const imgContainer = document.querySelector('.image')
 
     // remover se estiver no localstorage
     const index = favorites.indexOf(imgSource)
@@ -38,3 +25,25 @@ document.querySelector('.image').onclick = function(){
 
     localStorage.setItem('favorites', JSON.stringify(favorites))
 }
+
+// MÉTODOS
+async function getExternalImg(){
+    const response = await fetch('https://source.unsplash.com/random')
+
+    //                       interpolação
+    imgContainer
+    .innerHTML = `<img src="${response.url}">`
+
+}
+getExternalImg()
+
+function upadteImg(){
+    getExternalImg()
+    updateClasses()
+}
+
+function updateClasses(){
+
+}
+
+// clicalr no btn pega img externa
