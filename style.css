@@ -32,7 +32,7 @@ body{
 main {
     margin: auto;
 
-    width: 9k0vw;
+    width: 90vw;
 }
 
 button{
@@ -64,7 +64,7 @@ button:hover{
 
 .image:hover::after,
 .image.fav::after{
-    content: '2605';
+    content: '\2605';
     color: var(--primary);
 
     position: absolute;
@@ -75,7 +75,7 @@ button:hover{
 }
 
 .image.fav:hover:after{
-    content: '2606';
+    content: '\2606';
 }
 
 img{
