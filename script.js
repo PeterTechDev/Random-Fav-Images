@@ -23,13 +23,17 @@ document.querySelector('.image').onclick = function(){
     // salvar no local storage ou remover
     const imgSource = document.querySelector('.image img').src
 
+    const imgContainer = document.querySelector('.image')
+
     // remover se estiver no localstorage
     const index = favorites.indexOf(imgSource)
     const existsInLocalStorage = index != -1
     if(existsInLocalStorage) {
         favorites.splice(index, 1)
+        imgContainer.classList.remove('fav')
     } else { // salva no local storage
         favorites.push(imgSource)
+        imgContainer.classList.add('fav')
     }
 
     localStorage.setItem('favorites', JSON.stringify(favorites))
