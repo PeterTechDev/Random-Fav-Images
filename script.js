@@ -1,49 +1,58 @@
-// var para salvar as url favoritas
-// parse para transf em jason e primeiro verifica se já algum salvo no storage, caso contrário se inicia vazio
+
 let favorites = JSON.parse(localStorage.getItem('favorites')) || []
 const imgContainer = document.querySelector('.image')
-const btn = document.que
+const btn = document.querySelector('button')
 
-document.querySelector('button').onclick = ()=> updateClasses()
 
-// clicar na img
-imgContainer.onclick = function(){
-    // salvar no local storage ou remover
+// events
+btn.onclick=()=> updateImg()
+imgContainer.onclick=()=> updateAll()
+
+// Methods
+function getState(){
     const imgSource = document.querySelector('.image img').src
-
-
-    // remover se estiver no localstorage
+    
     const index = favorites.indexOf(imgSource)
     const existsInLocalStorage = index != -1
-    if(existsInLocalStorage) {
-        favorites.splice(index, 1)
-        imgContainer.classList.remove('fav')
-    } else { // salva no local storage
-        favorites.push(imgSource)
-        imgContainer.classList.add('fav')
-    }
 
-    localStorage.setItem('favorites', JSON.stringify(favorites))
+    return { imgSource, index, existsInLocalStorage}
 }
 
-// MÉTODOS
-async function getExternalImg(){
-    const response = await fetch('https://source.unsplash.com/random')
-
-    //                       interpolação
-    imgContainer
-    .innerHTML = `<img src="${response.url}">`
-
-}
-getExternalImg()
-
-function upadteImg(){
-    getExternalImg()
+function updateAll(){
+    updateFavorites()
     updateClasses()
 }
 
-function updateClasses(){
+function updateFavorites(){
+    const { existsInLocalStorage, index, imgSource} = getState()
 
+        existsInLocalStorage
+        ? favorites.splice(index, 1)
+        : favorites.push(imgSource)
+    
+        localStorage.setItem('favorites', JSON.stringify(favorites))
 }
 
-// clicalr no btn pega img externa
+function updateClasses(){
+    const { existsInLocalStorage } = getState()
+
+    imgContainer.classList.remove('fav')
+
+    if(existsInLocalStorage){
+        imgContainer.classList.add('fav')
+    }
+}
+
+async function updateImg(){
+    await getExternalImg()
+    updateClasses()
+}
+
+async function getExternalImg(){
+    const response = await fetch('https://source.unsplash.com/random')
+
+    imgContainer
+    .innerHTML = `<img src="${response.url}">`
+}
+
+getExternalImg()
