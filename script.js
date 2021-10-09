@@ -3,7 +3,6 @@ let favorites = JSON.parse(localStorage.getItem('favorites')) || []
 const imgContainer = document.querySelector('.image')
 const btn = document.querySelector('button')
 
-
 // events
 btn.onclick=()=> updateImg()
 imgContainer.onclick=()=> updateAll()
